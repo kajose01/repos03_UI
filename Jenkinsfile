@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_IMAGE = "kajose01/repos03_ui"
+        DOCKER_IMAGE = "kaj1/repos03_ui"
     }
 
     stages {
