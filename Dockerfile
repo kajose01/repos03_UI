@@ -1,11 +1,10 @@
-FROM maven:3.8.6-openjdk-11 AS build
-WORKDIR /app
-COPY pom.xml .
+FROM python:3.7-alpine
+WORKDIR /code
+ENV FLASK_APP=app.py
+ENV FLASK_RUN_HOST=0.0.0.0
+RUN apk add --no-cache gcc musl-dev linux-headers
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+EXPOSE 5000
 COPY . .
-RUN mvn clean package -DskipTests
-
-FROM eclipse-temurin:11-jre-jammy
-WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
-EXPOSE 8080
-CMD ["java", "-jar", "app.jar"]
+CMD ["flask", "run"]
